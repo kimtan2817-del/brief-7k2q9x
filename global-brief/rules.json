@@ -1,0 +1,770 @@
+{
+  "categories": {
+    "Energy": [
+      "oil",
+      "crude",
+      "brent",
+      "wti",
+      "opec",
+      "lng",
+      "natural gas",
+      "petrol",
+      "diesel",
+      "refinery",
+      "refineries",
+      "pipeline",
+      "fuel",
+      "gasoline",
+      "energy prices",
+      "gas prices",
+      "barrel"
+    ],
+    "Metals": [
+      "gold",
+      "silver",
+      "copper",
+      "bullion",
+      "platinum",
+      "palladium",
+      "aluminium",
+      "aluminum",
+      "steel",
+      "iron ore",
+      "nickel",
+      "lithium",
+      "metals",
+      "precious metals"
+    ],
+    "War & Security": [
+      "war",
+      "ceasefire",
+      "missile",
+      "missiles",
+      "airstrike",
+      "airstrikes",
+      "troops",
+      "military",
+      "drone",
+      "drones",
+      "invasion",
+      "hostage",
+      "hostages",
+      "nato",
+      "conflict",
+      "shelling",
+      "attack",
+      "attacks",
+      "terror",
+      "terrorist",
+      "bombing",
+      "sanctions",
+      "embargo",
+      "defence",
+      "defense",
+      "nuclear",
+      "navy",
+      "frontline"
+    ],
+    "Policy & Tariffs": [
+      "tariff",
+      "tariffs",
+      "trade deal",
+      "trade war",
+      "import duty",
+      "export ban",
+      "export curbs",
+      "white house",
+      "congress",
+      "senate",
+      "federal reserve",
+      "the fed",
+      "interest rate",
+      "interest rates",
+      "rate cut",
+      "rate hike",
+      "budget",
+      "legislation",
+      "bill signed",
+      "executive order",
+      "trade talks",
+      "customs",
+      "regulation",
+      "subsidy",
+      "subsidies",
+      "parliament"
+    ],
+    "India": [
+      "india",
+      "indian",
+      "indians",
+      "rbi",
+      "rupee",
+      "modi",
+      "new delhi",
+      "delhi",
+      "mumbai",
+      "sensex",
+      "nifty",
+      "bengaluru",
+      "sebi",
+      "lok sabha",
+      "bjp",
+      "congress party",
+      "rahul gandhi",
+      "kharge",
+      "rajya sabha",
+      "maharashtra",
+      "shiv sena",
+      "ncp",
+      "mahayuti",
+      "kejriwal",
+      "mamata"
+    ],
+    "Money": [
+      "mutual fund",
+      "mutual funds",
+      "sip",
+      "fixed deposit",
+      "fixed deposits",
+      "fd rate",
+      "fd rates",
+      "bond",
+      "bonds",
+      "bond yield",
+      "yields",
+      "repo rate",
+      "debt fund",
+      "etf",
+      "ppf",
+      "nps",
+      "small savings",
+      "deposit rates",
+      "savings account"
+    ],
+    "Markets & Economy": [
+      "inflation",
+      "gdp",
+      "stocks",
+      "shares",
+      "recession",
+      "bond yields",
+      "treasury yields",
+      "dollar",
+      "currency",
+      "jobs report",
+      "unemployment",
+      "central bank",
+      "imf",
+      "world bank",
+      "economy",
+      "economic growth"
+    ],
+    "Deals": [
+      "acquisition",
+      "acquisitions",
+      "acquires",
+      "acquire",
+      "acquired",
+      "merger",
+      "mergers",
+      "merges",
+      "takeover",
+      "buyout",
+      "stake sale",
+      "buys stake",
+      "sells stake",
+      "joint venture",
+      "invests",
+      "investment",
+      "investments",
+      "funding round",
+      "ipo",
+      "billion deal",
+      "mou",
+      "partnership"
+    ]
+  },
+  "regions": {
+    "US": [
+      "US",
+      "U.S.",
+      "United States",
+      "Washington",
+      "White House",
+      "Congress",
+      "Senate",
+      "Pentagon",
+      "Wall Street",
+      "Federal Reserve",
+      "American",
+      "Americans"
+    ],
+    "India": [
+      "India",
+      "Indian",
+      "RBI",
+      "Rupee",
+      "New Delhi",
+      "Modi",
+      "Mumbai",
+      "Delhi",
+      "BJP",
+      "Congress party",
+      "Rahul Gandhi",
+      "Kharge",
+      "Lok Sabha",
+      "Rajya Sabha",
+      "AAP",
+      "TMC",
+      "Shiv Sena",
+      "NCP",
+      "Mahayuti",
+      "Maharashtra",
+      "Pune",
+      "Nagpur",
+      "Kejriwal",
+      "Mamata"
+    ],
+    "China": [
+      "China",
+      "Chinese",
+      "Beijing",
+      "Hong Kong",
+      "Taiwan"
+    ],
+    "Europe": [
+      "Europe",
+      "European",
+      "EU",
+      "UK",
+      "Britain",
+      "Germany",
+      "France",
+      "Brussels",
+      "London",
+      "Paris",
+      "Berlin",
+      "ECB"
+    ],
+    "Middle East": [
+      "Israel",
+      "Gaza",
+      "Iran",
+      "Saudi",
+      "Yemen",
+      "Lebanon",
+      "Syria",
+      "Iraq",
+      "Gulf",
+      "Hormuz",
+      "Red Sea",
+      "UAE",
+      "Qatar",
+      "Middle East"
+    ],
+    "Russia & Ukraine": [
+      "Russia",
+      "Russian",
+      "Ukraine",
+      "Ukrainian",
+      "Moscow",
+      "Kyiv",
+      "Kremlin"
+    ],
+    "Asia-Pacific": [
+      "Japan",
+      "Korea",
+      "Australia",
+      "Indonesia",
+      "Philippines",
+      "Vietnam",
+      "Pakistan",
+      "Bangladesh",
+      "Singapore",
+      "Asia",
+      "Pacific"
+    ],
+    "Africa": [
+      "Africa",
+      "African",
+      "Nigeria",
+      "Kenya",
+      "Ethiopia",
+      "Sudan",
+      "Egypt",
+      "Congo"
+    ],
+    "Americas": [
+      "Canada",
+      "Mexico",
+      "Brazil",
+      "Argentina",
+      "Venezuela",
+      "Latin America",
+      "Colombia",
+      "Chile"
+    ]
+  },
+  "severity": {
+    "ceasefire": 3,
+    "invasion": 4,
+    "sanctions": 3,
+    "tariff": 3,
+    "tariffs": 3,
+    "opec": 3,
+    "rate cut": 3,
+    "rate hike": 3,
+    "record high": 3,
+    "record low": 3,
+    "record": 1,
+    "surge": 2,
+    "surges": 2,
+    "plunge": 2,
+    "plunges": 2,
+    "crash": 3,
+    "default": 3,
+    "embargo": 3,
+    "export ban": 3,
+    "emergency": 2,
+    "breaking": 2,
+    "killed": 3,
+    "dead": 2,
+    "missile": 2,
+    "airstrike": 2,
+    "airstrikes": 2,
+    "explosion": 2,
+    "collapse": 2,
+    "shutdown": 2,
+    "recession": 2,
+    "acquisition": 3,
+    "acquires": 3,
+    "merger": 3,
+    "takeover": 3,
+    "buyout": 3,
+    "stake sale": 2,
+    "joint venture": 2
+  },
+  "ignore": [
+    "premier league",
+    "champions league",
+    "box office",
+    "celebrity",
+    "grammys",
+    "oscars",
+    "transfer window",
+    "fashion week"
+  ],
+  "scoring": {
+    "high": 14,
+    "med": 9
+  },
+  "selection": {
+    "total": 20,
+    "show_first": 10,
+    "per_topic": 5,
+    "fresh_hours": 3,
+    "top_of_day": 3,
+    "top_window_hours": 24,
+    "min_score": 9
+  },
+  "impact_rules": [
+    {
+      "when_all": [
+        [
+          "opec",
+          "oil",
+          "crude",
+          "brent"
+        ],
+        [
+          "cut",
+          "cuts",
+          "output",
+          "supply",
+          "production",
+          "disruption",
+          "outage",
+          "sanction",
+          "sanctions"
+        ]
+      ],
+      "affects": [
+        "Energy",
+        "India import bill"
+      ],
+      "text": "Tighter oil supply can push crude and fuel prices up, raising costs for big importers such as India."
+    },
+    {
+      "when_all": [
+        [
+          "oil",
+          "crude",
+          "brent"
+        ],
+        [
+          "falls",
+          "fall",
+          "drops",
+          "drop",
+          "slides",
+          "slump",
+          "glut",
+          "tumbles",
+          "slips"
+        ]
+      ],
+      "affects": [
+        "Energy",
+        "India import bill"
+      ],
+      "text": "Cheaper crude eases import bills and fuel costs for consumers, but squeezes oil producers."
+    },
+    {
+      "when_all": [
+        [
+          "lng",
+          "natural gas",
+          "gas prices",
+          "gas supply"
+        ],
+        [
+          "supply",
+          "export",
+          "exports",
+          "terminal",
+          "pipeline",
+          "shortage",
+          "prices",
+          "approval",
+          "approves",
+          "approvals"
+        ]
+      ],
+      "affects": [
+        "Gas",
+        "Power & fertiliser costs"
+      ],
+      "text": "Gas and LNG supply changes move power and fertiliser costs and the import prices paid by Asian buyers."
+    },
+    {
+      "when_all": [
+        [
+          "ceasefire",
+          "truce",
+          "peace talks"
+        ]
+      ],
+      "affects": [
+        "Oil",
+        "Gold"
+      ],
+      "text": "Progress toward a ceasefire usually eases safe-haven demand for gold and the risk premium in oil."
+    },
+    {
+      "when_all": [
+        [
+          "strait",
+          "red sea",
+          "shipping",
+          "shippers",
+          "tanker",
+          "tankers",
+          "port",
+          "sea lane",
+          "suez",
+          "hormuz",
+          "insurers"
+        ],
+        [
+          "attack",
+          "attacks",
+          "risk",
+          "closure",
+          "threat",
+          "disruption",
+          "strike",
+          "reassess",
+          "reassesses",
+          "weigh"
+        ]
+      ],
+      "affects": [
+        "Freight",
+        "Oil"
+      ],
+      "text": "Shipping disruption can raise freight and insurance costs and lift oil prices."
+    },
+    {
+      "when_all": [
+        [
+          "sanctions",
+          "embargo"
+        ]
+      ],
+      "affects": [
+        "Energy",
+        "Trade flows"
+      ],
+      "text": "Sanctions can reroute trade flows and shift commodity prices, especially in energy."
+    },
+    {
+      "when_all": [
+        [
+          "war",
+          "conflict",
+          "airstrike",
+          "airstrikes",
+          "missile",
+          "missiles",
+          "invasion",
+          "troops"
+        ]
+      ],
+      "affects": [
+        "Oil",
+        "Gold"
+      ],
+      "text": "Escalation tends to lift oil and gold as investors look for safety; watch shipping routes nearby."
+    },
+    {
+      "when_all": [
+        [
+          "tariff",
+          "tariffs",
+          "trade war",
+          "import duty"
+        ],
+        [
+          "steel",
+          "aluminium",
+          "aluminum",
+          "metal",
+          "metals"
+        ]
+      ],
+      "affects": [
+        "Metals",
+        "Exporters"
+      ],
+      "text": "Trade barriers on metals can raise input costs for exporters and add volatility to metal prices."
+    },
+    {
+      "when_all": [
+        [
+          "tariff",
+          "tariffs",
+          "trade war",
+          "import duty",
+          "export ban"
+        ]
+      ],
+      "affects": [
+        "Exporters",
+        "Currency"
+      ],
+      "text": "Tariffs raise costs for traders and can trigger retaliation; watch exporters and the currency."
+    },
+    {
+      "when_all": [
+        [
+          "gold",
+          "silver",
+          "bullion"
+        ],
+        [
+          "record",
+          "surge",
+          "surges",
+          "falls",
+          "slips",
+          "jumps",
+          "rally",
+          "drops",
+          "steady",
+          "steadies",
+          "price",
+          "prices",
+          "edges"
+        ]
+      ],
+      "affects": [
+        "Gold",
+        "Silver"
+      ],
+      "text": "Precious metals tend to rise on uncertainty and a weaker dollar, and ease when yields and the dollar strengthen."
+    },
+    {
+      "when_all": [
+        [
+          "rate cut",
+          "rate hike",
+          "interest rate",
+          "interest rates",
+          "federal reserve",
+          "the fed",
+          "central bank",
+          "central banks"
+        ]
+      ],
+      "affects": [
+        "Dollar",
+        "Gold",
+        "Rupee"
+      ],
+      "text": "Interest-rate signals move the dollar, gold and capital flows into emerging markets like India."
+    },
+    {
+      "when_all": [
+        [
+          "rupee",
+          "RBI"
+        ]
+      ],
+      "affects": [
+        "Rupee",
+        "Imports"
+      ],
+      "text": "A weaker rupee makes imports such as oil costlier; RBI action shows how much volatility it will tolerate."
+    },
+    {
+      "when_all": [
+        [
+          "inflation",
+          "cpi"
+        ]
+      ],
+      "affects": [
+        "Rates",
+        "Consumers"
+      ],
+      "text": "Higher inflation raises the odds of tighter policy and squeezes household spending."
+    },
+    {
+      "when_all": [
+        [
+          "china",
+          "chinese",
+          "beijing"
+        ],
+        [
+          "demand",
+          "growth",
+          "stimulus",
+          "exports",
+          "slowdown",
+          "property",
+          "factory",
+          "output"
+        ]
+      ],
+      "affects": [
+        "Metals",
+        "Oil"
+      ],
+      "text": "China is the largest buyer of many commodities, so its slowdowns tend to weigh on metals and oil."
+    },
+    {
+      "when_all": [
+        [
+          "india",
+          "indian"
+        ],
+        [
+          "export",
+          "exports",
+          "exporters",
+          "trade deal",
+          "import",
+          "imports"
+        ]
+      ],
+      "affects": [
+        "Exporters",
+        "Trade balance"
+      ],
+      "text": "Trade changes affect Indian exporters' margins and the trade balance."
+    }
+  ],
+  "category_defaults": {
+    "Energy": "Energy news can move fuel prices, import bills and inflation.",
+    "Metals": "Metal prices feed into manufacturing costs and investor safe-haven demand.",
+    "War & Security": "Security developments can shift oil, gold and shipping risk.",
+    "Policy & Tariffs": "Policy changes can affect trade flows, costs and markets.",
+    "India": "Domestic developments can affect markets, the rupee and key sectors.",
+    "Markets & Economy": "Economic data guides rate expectations and currency moves.",
+    "Deals": "Big deals reshape sectors, supply chains and who the key players are."
+  },
+  "market_links": {
+    "thresholds": {
+      "brent": 1.5,
+      "wti": 1.5,
+      "natgas": 3.0,
+      "gold": 0.8,
+      "silver": 1.5,
+      "usdinr": 0.3
+    },
+    "asset_categories": {
+      "brent": [
+        "Energy",
+        "War & Security"
+      ],
+      "wti": [
+        "Energy",
+        "War & Security"
+      ],
+      "natgas": [
+        "Energy"
+      ],
+      "gold": [
+        "Metals",
+        "War & Security",
+        "Policy & Tariffs",
+        "Markets & Economy"
+      ],
+      "silver": [
+        "Metals",
+        "War & Security",
+        "Policy & Tariffs",
+        "Markets & Economy"
+      ],
+      "usdinr": [
+        "India",
+        "Policy & Tariffs",
+        "Markets & Economy"
+      ]
+    },
+    "asset_terms": {
+      "brent": [
+        "oil",
+        "crude",
+        "brent",
+        "opec"
+      ],
+      "wti": [
+        "oil",
+        "crude",
+        "wti",
+        "opec"
+      ],
+      "natgas": [
+        "gas",
+        "lng",
+        "natural gas"
+      ],
+      "gold": [
+        "gold",
+        "bullion"
+      ],
+      "silver": [
+        "silver",
+        "bullion"
+      ],
+      "usdinr": [
+        "rupee",
+        "RBI",
+        "dollar"
+      ]
+    },
+    "window_hours": 12
+  }
+}

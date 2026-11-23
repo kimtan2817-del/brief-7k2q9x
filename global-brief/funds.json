@@ -1,0 +1,11 @@
+{
+  "note": "Funds are looked up by name through the free mfapi.in search. Edit this list freely. If a fund shows 'not found', make the name simpler or add its scheme code as \"code\": 123456.",
+  "funds": [
+    { "query": "UTI Nifty 50 Index Fund Direct Growth" },
+    { "query": "HDFC Flexi Cap Fund Direct Growth" },
+    { "query": "Parag Parikh Flexi Cap Fund Direct Growth" },
+    { "query": "SBI Large Cap Fund Direct Growth" },
+    { "query": "ICICI Prudential Large Cap Fund Direct Growth" },
+    { "query": "Nippon India Small Cap Fund Direct Growth" }
+  ]
+}

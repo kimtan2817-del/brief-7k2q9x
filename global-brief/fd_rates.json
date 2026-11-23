@@ -1,0 +1,13 @@
+{
+  "as_of": "",
+  "note": "Fill in the rates (percent per year) from each bank's website and set as_of to the date, for example \"16 Nov 2026\". Leave a rate as null if you do not have it. These are NOT fetched automatically.",
+  "banks": [
+    { "name": "State Bank of India", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "HDFC Bank", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "ICICI Bank", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "Axis Bank", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "Kotak Mahindra Bank", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "Punjab National Bank", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } },
+    { "name": "Bank of Baroda", "rates": { "1 year": null, "2 years": null, "3 years": null, "5 years": null } }
+  ]
+}

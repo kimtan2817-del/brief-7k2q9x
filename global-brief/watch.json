@@ -1,0 +1,39 @@
+{
+  "window_days": 2,
+  "groups": {
+    "maharashtra": {
+      "label": "Maharashtra",
+      "entities": {
+        "Sharad Pawar": { "aliases": ["Sharad Pawar"], "queries": ["\"Sharad Pawar\""] },
+        "Devendra Fadnavis": { "aliases": ["Fadnavis"], "queries": ["Fadnavis"] },
+        "Raj Thackeray": { "aliases": ["Raj Thackeray"], "queries": ["\"Raj Thackeray\""] },
+        "Uddhav Thackeray": { "aliases": ["Uddhav Thackeray", "Uddhav"], "queries": ["\"Uddhav Thackeray\""] },
+        "Eknath Shinde": { "aliases": ["Eknath Shinde", "Deputy CM Shinde", "Shinde Sena", "Shinde-led"], "queries": ["\"Eknath Shinde\""] },
+        "Jay Pawar": { "aliases": ["Jay Pawar"], "queries": ["\"Jay Pawar\""] },
+        "Rohit Pawar": { "aliases": ["Rohit Pawar"], "queries": ["\"Rohit Pawar\""] }
+      }
+    },
+    "leaders": {
+      "label": "India Leaders",
+      "entities": {
+        "Narendra Modi": { "aliases": ["Narendra Modi", "PM Modi", "Prime Minister Modi", "Modi"], "queries": ["\"Narendra Modi\""] },
+        "Amit Shah": { "aliases": ["Amit Shah"], "queries": ["\"Amit Shah\""] },
+        "Ajit Doval": { "aliases": ["Ajit Doval", "NSA Doval", "Doval"], "queries": ["\"Ajit Doval\""] },
+        "Nitin Gadkari": { "aliases": ["Gadkari"], "queries": ["Gadkari"] },
+        "Nitin Nabin": { "aliases": ["Nitin Nabin", "Nabin"], "queries": ["\"Nitin Nabin\""] },
+        "S. Jaishankar": { "aliases": ["Jaishankar", "Jai Shankar"], "queries": ["Jaishankar"] }
+      }
+    },
+    "world": {
+      "label": "World",
+      "entities": {
+        "United States": { "aliases": ["US", "U.S.", "United States", "America", "American", "White House", "Trump"], "queries": ["United States India", "White House Trump"] },
+        "China": { "aliases": ["China", "Chinese", "Beijing", "Xi Jinping"], "queries": ["China India", "Xi Jinping"] },
+        "Russia": { "aliases": ["Russia", "Russian", "Moscow", "Kremlin", "Putin"], "queries": ["Russia India", "Putin"] },
+        "UAE & Dubai": { "aliases": ["UAE", "Dubai", "Abu Dhabi", "Emirati"], "queries": ["UAE India", "Dubai"] },
+        "Iran": { "aliases": ["Iran", "Iranian", "Tehran"], "queries": ["Iran India", "Iran president"] },
+        "Israel": { "aliases": ["Israel", "Israeli", "Netanyahu"], "queries": ["Israel India", "Israel prime minister"] }
+      }
+    }
+  }
+}

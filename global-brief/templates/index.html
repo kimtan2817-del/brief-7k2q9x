@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Global Brief">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+{% if not ready %}<meta http-equiv="refresh" content="10">{% endif %}
+<title>Global Brief</title>
+<script>
+/* Day mode is the default. The choice is remembered per device. */
+try { document.documentElement.setAttribute('data-theme', localStorage.getItem('gb-theme') === 'dark' ? 'dark' : 'light'); } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700;6..72,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F3F5; --panel:#FFFFFF; --soft:#F7F8FA; --ink:#0B0D10; --muted:#1F242A; --line:#E3E6EA;
+  --accent:#1456D9; --accent-soft:#E6EEFC; --up:#1B7A3E; --down:#C62828; --live:#D32F2F;
+  --shadow:0 1px 2px rgba(16,24,40,.06); --lift:0 10px 28px rgba(16,24,40,.14);
+  --serif:Newsreader, Georgia, serif; --sans:Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --top:58px; --tick:34px; --bot:62px;
+}
+:root[data-theme="dark"]{
+  --bg:#0E1013; --panel:#171A1F; --soft:#13161A; --ink:#F4F6F8; --muted:#D3D8DF; --line:#2A2F37;
+  --accent:#7FB0FF; --accent-soft:#1D2A40; --up:#5FD08A; --down:#FF8A84; --live:#FF6B63;
+  --shadow:none; --lift:0 10px 28px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.4}
+a{color:inherit}
+button{font-family:inherit;color:inherit}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ============ header + breaking ticker ============ */
+.top{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line)}
+.top-in{max-width:1240px;margin:0 auto;padding:0 16px;height:var(--top);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;min-width:0}
+.mark{flex:none;width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font:800 15px/1 var(--serif);letter-spacing:-.02em}
+:root[data-theme="dark"] .mark{color:#0B1B33}
+.brand{font:800 21px/1 var(--serif);letter-spacing:-.015em;white-space:nowrap}
+.stamp{margin-top:3px;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sample{font:700 10px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent);margin-right:7px;white-space:nowrap}
+.tbtn{display:flex;align-items:center;justify-content:center;gap:8px;min-width:44px;height:44px;padding:0 12px;border-radius:22px;border:1px solid var(--line);background:var(--soft);cursor:pointer;font:600 13px/1 var(--sans)}
+.tbtn:hover{border-color:var(--accent)}
+.right{display:flex;gap:8px;flex:none}
+.i-sun,.t-day{display:none}
+:root[data-theme="dark"] .i-sun,:root[data-theme="dark"] .t-day{display:inline}
+:root[data-theme="dark"] .i-moon,:root[data-theme="dark"] .t-night{display:none}
+@media (max-width:620px){ .tbtn .t-day,.tbtn .t-night{display:none !important} .tbtn{padding:0} .tbtn{width:44px} }
+
+.ticker{height:var(--tick);display:flex;align-items:stretch;border-top:1px solid var(--line);background:var(--soft);overflow:hidden}
+.tk-label{flex:none;display:flex;align-items:center;gap:7px;padding:0 14px;background:var(--live);color:#fff;font:800 11px/1 var(--sans);letter-spacing:.1em}
+.tk-label i{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.tk-track{flex:1;overflow:hidden;position:relative;display:flex;align-items:center}
+.tk-move{display:flex;gap:42px;white-space:nowrap;padding-left:24px;animation:tk 70s linear infinite;will-change:transform}
+.tk-track:hover .tk-move{animation-play-state:paused}
+.tk-move span{font:600 13px/1 var(--sans)}
+.tk-move span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:1px}
+@keyframes tk{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){ .tk-move{animation:none} .tk-track{overflow-x:auto} .tk-label i{animation:none} }
+
+/* ============ layout + navigation ============ */
+.layout{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);padding-bottom:calc(var(--bot) + env(safe-area-inset-bottom))}
+.side{display:none}
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;overflow-x:auto;background:var(--panel);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);scrollbar-width:none}
+.bottom::-webkit-scrollbar{display:none}
+.bottom a{flex:1 0 auto;min-width:78px;height:var(--bot);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;color:var(--muted);font:600 11px/1 var(--sans);padding:0 8px;white-space:nowrap;position:relative}
+.bottom a[aria-current="page"]{color:var(--accent)}
+.bottom a[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.side a{display:flex;align-items:center;gap:11px;min-height:44px;padding:0 12px;border-radius:10px;text-decoration:none;color:var(--muted);font:600 14px/1 var(--sans);border:1px solid transparent}
+.side a:hover{color:var(--ink);background:var(--soft)}
+.side a[aria-current="page"]{background:var(--panel);color:var(--accent);border-color:var(--line);box-shadow:var(--shadow)}
+.side em{margin-left:auto;font:600 12px/1 var(--sans);font-style:normal;color:var(--muted)}
+.side .sep{height:1px;background:var(--line);margin:8px 12px}
+.side svg,.bottom svg{flex:none}
+
+/* ============ views ============ */
+.view{display:none}
+.view.on{display:block}
+.page{padding:16px 16px 24px}
+.ptitle{margin:0;font:800 30px/1.1 var(--serif);letter-spacing:-.015em}
+.psub{margin:6px 0 16px;font-size:13px;color:var(--muted)}
+.h{margin:26px 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.h h2{margin:0;font:700 12px/1 var(--sans);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
+.loading{padding:70px 16px;text-align:center;color:var(--muted)}
+.small{margin:8px 0 0;font-size:13px;font-weight:600;color:var(--ink);line-height:1.5}
+.note{margin:8px 2px 0;font-size:13px;font-weight:500;color:var(--ink)}
+
+/* ============ tools: market pills, chips, cards/list toggle ============ */
+.tools{display:flex;gap:10px;align-items:center;padding:8px 12px;flex:none}
+.pills{display:flex;gap:8px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;align-items:center}
+.pills::-webkit-scrollbar{display:none}
+.mp{flex:none;display:flex;align-items:baseline;gap:7px;height:36px;padding:0 12px;border-radius:18px;background:var(--panel);border:1px solid var(--line);font-size:13px;align-items:center;white-space:nowrap}
+.mp b{font-weight:600;color:var(--muted)}
+.mp .num:first-of-type{font-weight:700}
+.mp .num:last-child{font-size:12px;font-weight:600}
+.seg{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:3px;flex:none}
+.seg button{min-height:38px;min-width:64px;border:none;border-radius:9px;background:transparent;color:var(--muted);font:600 13px/1 var(--sans);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+
+/* ============ the story card ============ */
+.story{--c:#1456D9}
+.story[data-cat="Energy"]{--c:#9A4A00}
+.story[data-cat="Metals"]{--c:#7A5A00}
+.story[data-cat="War & Security"]{--c:#A32A24}
+.story[data-cat="Policy & Tariffs"]{--c:#4B3F9E}
+.story[data-cat="India"]{--c:#B34700}
+.story[data-cat="Money"]{--c:#17693A}
+.story[data-cat="Deals"]{--c:#6A2FA0}
+.story[data-cat="Markets & Economy"]{--c:#0F6B73}
+.media{position:relative;overflow:hidden;background:var(--c)}
+.media .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.28);background:var(--c);background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 55%,#000))}
+.media .ph svg{width:34%;max-width:130px;height:auto}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media::after{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(to top,rgba(0,0,0,.45),transparent);pointer-events:none}
+.pill{position:absolute;left:14px;bottom:12px;z-index:2;background:var(--c);color:#fff;font:700 11px/1 var(--sans);letter-spacing:.07em;text-transform:uppercase;padding:6px 9px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.hot{position:absolute;left:14px;top:12px;z-index:2;background:var(--live);color:#fff;font:800 10px/1 var(--sans);letter-spacing:.09em;padding:5px 8px;border-radius:5px}
+.credit{position:absolute;right:10px;bottom:8px;z-index:2;font:500 10px/1 var(--sans);color:rgba(255,255,255,.85);text-shadow:0 1px 3px rgba(0,0,0,.7);max-width:45%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.body{padding:16px 18px 8px}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 12px/1.2 var(--sans);color:var(--muted)}
+.who{color:var(--accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ago{flex:none}
+.story h3{margin:9px 0 0;font:700 24px/1.2 var(--serif);letter-spacing:-.01em}
+.story h3 a{text-decoration:none}
+.story h3 a:hover{text-decoration:underline}
+.sum{margin:12px 0 0;font-size:16.5px;line-height:1.55;font-weight:600;color:var(--ink)}
+.more{display:inline-flex;flex:none;align-items:center;gap:6px;margin:4px 18px 6px;min-height:44px;font:600 14px/1.3 var(--sans);color:var(--ink);text-decoration:none;border-bottom:2px solid var(--accent);align-self:flex-start}
+.more b{color:var(--accent)}
+.more:hover{background:var(--accent-soft)}
+.hot.top{background:var(--accent)}
+:root[data-theme="dark"] .hot.top{color:#0B1B33}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px 14px}
+.src{display:flex;align-items:center;gap:9px;min-width:0;font:600 12px/1.2 var(--sans);color:var(--muted)}
+.av{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font:700 12px/1 var(--sans);text-transform:uppercase}
+.names{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acts{display:flex;align-items:center;gap:8px;flex:none}
+.share{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer}
+.share:hover{border-color:var(--accent);color:var(--accent)}
+.read{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:22px;background:var(--accent);color:#fff;font:700 13px/1 var(--sans);text-decoration:none;white-space:nowrap}
+:root[data-theme="dark"] .read{color:#0B1B33}
+.read:hover{filter:brightness(1.1)}
+
+/* the morning brief card */
+.brief{display:flex;flex-direction:column;justify-content:center;padding:22px 20px;background:var(--panel)}
+.brief .live{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;font:800 11px/1 var(--sans);letter-spacing:.1em;color:var(--live)}
+.brief .live i{width:8px;height:8px;border-radius:50%;background:var(--live);animation:pulse 1.6s infinite}
+.brief h2{margin:10px 0 0;font:800 32px/1.05 var(--serif);letter-spacing:-.02em}
+.brief .bsub{margin:6px 0 14px;font-size:14px;color:var(--muted)}
+.blist{list-style:none;margin:0;padding:0}
+.blist li{border-top:1px solid var(--line)}
+.jump{width:100%;display:flex;align-items:flex-start;gap:14px;text-align:left;padding:13px 2px;background:none;border:none;cursor:pointer;min-height:56px}
+.jump .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:800 13px/1 var(--sans)}
+:root[data-theme="dark"] .jump .n{color:#0B1B33}
+.jump .t{font:700 16px/1.3 var(--serif)}
+.jump .t small{display:block;font:700 10.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.jump:hover .t{text-decoration:underline}
+
+.morebar{display:flex;align-items:center;justify-content:center;padding:18px 12px}
+.morebtn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:24px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font:700 14px/1 var(--sans);cursor:pointer}
+.morebtn b{background:var(--accent);color:#fff;border-radius:11px;padding:4px 8px;font-size:12px}
+:root[data-theme="dark"] .morebtn b{color:#0B1B33}
+.morebtn:hover{filter:brightness(1.05)}
+
+/* ============ PHONE: full-screen swipe cards ============ */
+@media (max-width:899px){
+  .view.feed.on{display:flex;flex-direction:column;height:calc(100vh - var(--top) - var(--tick) - var(--bot) - env(safe-area-inset-bottom));height:calc(100dvh - var(--top) - var(--tick) - var(--bot) - env(safe-area-inset-bottom))}
+  .view.feed .vhead{display:none}
+  .nb{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+  .stage{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+  .nb .stack{flex:1;min-height:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+  .nb .stack::-webkit-scrollbar{display:none}
+  .nb:not(.is-list) .stack>.story{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;background:var(--panel)}
+  .nb:not(.is-list) .story .media{flex:0 0 32%}
+  .nb:not(.is-list) .story .body{flex:1;min-height:0;overflow-y:auto;padding-bottom:30px;-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent)}
+  .nb:not(.is-list) .story .foot{flex:none;border-top:1px solid var(--line)}
+  .nb:not(.is-list) .story.brief{overflow-y:auto;justify-content:flex-start}
+  .nb:not(.is-list) .morebar{height:100%;scroll-snap-align:start;scroll-snap-stop:always;background:var(--panel)}
+  .counter{position:absolute;top:12px;right:12px;z-index:5;background:rgba(0,0,0,.55);color:#fff;font:700 11px/1 var(--sans);padding:6px 9px;border-radius:12px;pointer-events:none}
+  .nb.is-list .counter,.nb.rows .counter{display:none}
+}
+
+/* ============ LAPTOP: sidebar + news wall ============ */
+@media (min-width:900px){
+  .layout{grid-template-columns:224px minmax(0,1fr);gap:24px;padding:20px 16px 40px}
+  .side{display:block;position:sticky;top:calc(var(--top) + var(--tick) + 16px);align-self:start}
+  .bottom{display:none}
+  .view.feed .vhead{padding:0 0 4px}
+  .tools{padding:8px 0 12px}
+  .nb .stack{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;align-items:stretch}
+  .nb:not(.is-list) .story .body{flex:1}
+  .nb:not(.is-list) .story{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s}
+  .nb:not(.is-list) .story:hover{box-shadow:var(--lift);transform:translateY(-3px)}
+  .nb:not(.is-list) .story .media{aspect-ratio:16/9}
+  .nb:not(.is-list) .story .body{padding:14px 16px 6px}
+  .nb:not(.is-list) .story h3{font-size:19px}
+  .nb:not(.is-list) .story .sum{font-size:15px}
+  .nb:not(.is-list) .story .foot{padding:8px 16px 14px}
+  .nb:not(.is-list) .story .share{display:none}
+    .nb:not(.is-list) .story.lead{grid-column:span 2}
+  .nb:not(.is-list) .story.lead h3{font-size:28px}
+  .nb:not(.is-list) .story.lead .sum{font-size:17px}
+  .nb:not(.is-list) .story.lead .media{aspect-ratio:21/9}
+  .nb:not(.is-list) .story.brief{grid-column:1 / -1;cursor:default;padding:24px 28px}
+  .nb:not(.is-list) .story.brief:hover{transform:none;box-shadow:var(--shadow)}
+  .nb:not(.is-list) .story.brief .blist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+  .nb:not(.is-list) .morebar{grid-column:1 / -1}
+  .counter{display:none}
+}
+
+/* ============ LIST mode (and compact rows on Markets / Money pages) ============ */
+.nb.is-list .stack{display:block;padding:0 12px;overflow-y:auto;scroll-snap-type:none}
+@media (min-width:900px){ .nb.is-list .stack{padding:0} }
+.nb.is-list .story{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 14px;align-items:start;padding:12px;margin-bottom:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;cursor:pointer}
+.nb.is-list .story .media{grid-row:1 / span 2;height:76px;border-radius:10px}
+.nb.is-list .story .media::after,.nb.is-list .story .pill,.nb.is-list .story .credit,.nb.is-list .story .hot{display:none}
+.nb.is-list .story .body{padding:0}
+.nb.is-list .story h3{font:700 16px/1.3 var(--serif);margin-top:5px}
+.nb.is-list .story .sum,.nb.is-list .story .more,.nb.is-list .story .share{display:none}
+.nb.is-list .story .foot{padding:6px 0 0}
+.nb.is-list .story .av{width:20px;height:20px;font-size:10px}
+.nb.is-list .story.brief{display:none}
+.nb.rows .stack{padding:0}
+
+/* ============ reader (laptop) ============ */
+dialog{border:none;padding:0;color:var(--ink);background:var(--panel)}
+dialog::backdrop{background:rgba(10,14,20,.55)}
+.reader{width:min(760px,calc(100% - 32px));max-height:calc(100vh - 40px);border-radius:20px;box-shadow:var(--lift);overflow:hidden}
+.reader[open]{display:flex;flex-direction:column}
+.rbar{flex:none;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line)}
+.rbar .l{display:flex;gap:8px}
+.rbtn{min-width:44px;height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);background:var(--soft);cursor:pointer;font:600 13px/1 var(--sans)}
+.rbtn:disabled{opacity:.4;cursor:default}
+.rbody{overflow-y:auto}
+.rbody .story{border:none;box-shadow:none;border-radius:0;cursor:default;transform:none;display:flex;flex-direction:column}
+.rbody .story .media{aspect-ratio:16/8}
+.rbody .story h3{font-size:30px}
+.rbody .story .body{padding:18px 24px 8px}
+.rbody .story .foot{padding:10px 24px 20px}
+.rbody .story .sum,.rbody .story .more{display:block}
+.rbody .story .more{display:inline-flex}
+.rbody .story .share{display:grid}
+.about{width:min(520px,calc(100% - 32px));border-radius:18px;padding:22px;box-shadow:var(--lift)}
+.about h2{margin:0 0 10px;font:800 22px/1.1 var(--serif)}
+.about p{margin:0 0 10px;font-size:14px;line-height:1.55;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(var(--bot) + 24px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:20px;font:600 13px/1 var(--sans);z-index:60;box-shadow:var(--lift)}
+
+@media (max-width:620px){ .seg button{min-width:50px} .tools{gap:8px;padding:8px 10px} }
+
+/* ============ Markets / Money / Rupee pages ============ */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.asset{padding:18px}
+.ah{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ah h3{margin:0;font:700 21px/1.2 var(--serif)}
+.unit{font-size:13px;font-weight:500;color:var(--ink);margin-top:3px}
+.big{font:800 26px/1.1 var(--sans)}
+.chart{display:block;width:100%;height:60px;margin:12px 0 4px;color:var(--accent)}
+.cmp{width:100%;border-collapse:collapse;font-size:14px}
+.cmp th{text-align:left;font-weight:500;color:var(--muted);padding:9px 0;border-top:1px solid var(--line)}
+.cmp td{text-align:right;padding:9px 0 9px 12px;border-top:1px solid var(--line);font-weight:600}
+.sumline{margin:10px 0 0;font-size:15px;font-weight:700;line-height:1.5;color:var(--ink)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font:700 11px/1 var(--sans);letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:left;padding:14px 16px 10px}
+.tbl td{padding:12px 16px;border-top:1px solid var(--line);font-size:14px}
+.tbl .r{text-align:right}
+.scroll{overflow-x:auto}
+.link{padding:12px 16px;border-top:1px solid var(--line);font-size:14px}
+.link:first-child{border-top:none}
+</style>
+</head>
+<body{% if demo %} data-demo="1"{% endif %}>
+
+{% macro icon(path, size=20) %}<svg width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ path }}"/></svg>{% endmacro %}
+
+{% macro story(s, lead=False, extra=False) %}
+<article class="story{{ ' lead' if lead }}" data-cat="{{ s.primary }}" data-ents="{{ s.entities|join('|') }}" data-title="{{ s.title }}" data-link="{{ s.link }}"{% if extra %} data-extra="1" hidden{% endif %}>
+  <div class="media">
+    <div class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.icon }}"/></svg></div>
+    {% if s.image %}<img src="{{ s.image }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+    {% if s.topday %}<span class="hot top">TOP OF THE DAY</span>{% elif s.impact == 'HIGH' %}<span class="hot">HIGH IMPACT</span>{% endif %}
+    <span class="pill">{{ s.primary }}</span>
+    {% if s.image %}<span class="credit">Image: {{ s.credit }}</span>{% endif %}
+  </div>
+  <div class="body">
+    <div class="meta"><span class="who">{{ s.entities[:2]|join(' · ') }}</span><span class="ago" data-ts="{{ s.ts }}">{{ s.ago }}</span></div>
+    <h3><a class="hl" href="{{ s.link }}" target="_blank" rel="noopener noreferrer">{{ s.title }}</a></h3>
+    {% if s.short %}<p class="sum">{{ s.short }}</p>{% endif %}
+  </div>
+  <a class="more" href="{{ s.link }}" target="_blank" rel="noopener noreferrer">Read more at <b>{{ s.sources[0] }}</b> {{ icon("M5 12h14M13 6l6 6-6 6", 15) }}</a>
+  <div class="foot">
+    <div class="src"><span class="av" aria-hidden="true">{{ s.sources[0][:1] }}</span><span class="names">{{ s.sources[:2]|join(', ') }}{% if s.n_sources > 2 %} +{{ s.n_sources - 2 }}{% endif %}</span></div>
+    <div class="acts">
+      <button class="share" type="button" aria-label="Share this story">{{ icon("M12 15V4M8 8l4-4 4 4M5 13v6h14v-6", 18) }}</button>
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro briefcard(brief, title) %}
+<section class="story brief" data-cat="World" data-ents="">
+  <span class="live"><i></i>LIVE</span>
+  <h2>{{ title }}</h2>
+  <p class="bsub">{{ brief|length }} thing{{ "" if brief|length == 1 else "s" }} to know right now. Tap one to jump to it.</p>
+  <ol class="blist">
+    {% for s in brief %}<li><button class="jump" type="button" data-i="{{ loop.index0 }}"><span class="n">{{ loop.index }}</span><span class="t"><small>{{ s.primary }}</small>{{ s.title }}</span></button></li>{% endfor %}
+  </ol>
+</section>
+{% endmacro %}
+
+{% macro feed(stories, top_n=None, pills=None, brief=None, btitle='', rows=False, empty="Nothing here right now.") %}
+<div class="nb{{ ' rows is-list' if rows }}">
+  {% if not rows %}
+  <div class="tools">
+    {% if pills %}<div class="pills" aria-label="Market prices">{% for p in pills %}<span class="mp"><b>{{ p.label }}</b><span class="num">{{ p.price_fmt }}</span><span class="num {{ p.dir }}">{{ p.chg_fmt }}</span></span>{% endfor %}</div>{% endif %}
+    <div class="seg" role="group" aria-label="Reading style">
+      <button type="button" data-mode="cards" aria-pressed="true">Cards</button>
+      <button type="button" data-mode="list" aria-pressed="false">List</button>
+    </div>
+  </div>
+  {% endif %}
+  {% if stories %}
+  <div class="stage">
+    <div class="counter" aria-hidden="true"></div>
+    <div class="stack">
+      {% if brief %}{{ briefcard(brief, btitle) }}{% endif %}
+      {% for s in stories %}
+        {% if top_n and loop.index0 == top_n %}<div class="morebar"><button class="morebtn" type="button">More top stories <b>{{ stories|length - top_n }}</b></button></div>{% endif %}
+        {{ story(s, loop.first and not rows, top_n and loop.index0 >= top_n) }}
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="panel empty" style="margin:12px">{{ empty }}</div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro linked(links) %}
+{% if links %}
+<div class="h"><h2>Possibly linked</h2></div>
+<div class="panel">
+  {% for l in links %}
+  <div class="link"><strong>{{ l.label }} <span class="{{ l.dir }} num">{{ l.chg_fmt }}</span></strong> &mdash; possibly linked to:
+    <a href="{{ l.story.link }}" target="_blank" rel="noopener noreferrer">{{ l.story.title }}</a></div>
+  {% endfor %}
+</div>
+<div class="note">These are time-based matches, not proof of cause.</div>
+{% endif %}
+{% endmacro %}
+
+{% macro chart(pts) %}{% if pts %}<svg class="chart" viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true"><polyline points="{{ pts }}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>{% endif %}{% endmacro %}
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo">
+      <div class="mark" aria-hidden="true">GB</div>
+      <div style="min-width:0">
+        <div class="brand">Global Brief</div>
+        <div class="stamp">{% if demo %}<span class="sample">Sample data</span>{% endif %}{{ today }}{% if updated %} &middot; Updated {{ updated }}{% endif %}</div>
+      </div>
+    </div>
+    <div class="right">
+      <button class="tbtn" id="about-btn" type="button" aria-label="About this brief">{{ icon("M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8v.01", 18) }}</button>
+      <button class="tbtn" id="theme" type="button" aria-label="Switch to night mode" aria-pressed="false">
+        <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>
+        <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <span class="t-night">Night mode</span><span class="t-day">Day mode</span>
+      </button>
+    </div>
+  </div>
+  {% if ticker %}
+  <div class="ticker" role="region" aria-label="Breaking headlines">
+    <span class="tk-label"><i></i>LIVE</span>
+    <div class="tk-track"><div class="tk-move">
+      {% for t in ticker %}<span>{{ t.title }}</span>{% endfor %}
+      {% for t in ticker %}<span aria-hidden="true">{{ t.title }}</span>{% endfor %}
+    </div></div>
+  </div>
+  {% endif %}
+</header>
+
+<div class="layout">
+  <nav class="side" aria-label="Sections">
+    {% for n in nav %}
+    <a href="#{{ n.id }}" data-nav="{{ n.id }}">{{ icon(n.icon) }}<span>{{ n.label }}</span></a>
+    {% if n.id == 'india' %}<div class="sep"></div>{% endif %}
+    {% endfor %}
+  </nav>
+
+  <main>
+    {% if not ready %}
+    <div class="loading">Fetching the latest news and prices&hellip; this page refreshes by itself.</div>
+    {% else %}
+
+    {% for n in nav %}
+    {% set is_feed = n.id in ('world', 'india') %}
+    <section class="view {{ 'feed' if is_feed else 'page' }}" id="view-{{ n.id }}" aria-labelledby="t-{{ n.id }}">
+      <div class="vhead">
+        <h1 class="ptitle" id="t-{{ n.id }}">{{ n.label }}</h1>
+        {% if n.id == 'world' %}<p class="psub">What world leaders and big players are doing, across every sector. Latest 3 hours, plus the day's top stories.</p>
+        {% elif n.id == 'india' %}<p class="psub">Maharashtra, national leaders and major party news. Latest 3 hours, plus the day's top stories.</p>
+        {% elif n.id == 'markets' %}<p class="psub">Then versus now for gold, silver and oil.</p>
+        {% elif n.id == 'money' %}<p class="psub">The rupee, mutual funds, deposit rates and bonds.</p>{% endif %}
+      </div>
+
+      {% if is_feed %}
+        {{ feed(n.stories, show_first, None, n.brief, (greeting ~ ' Brief') if n.id == 'world' else 'India Brief', False, "Nothing important in the last few hours. Check back soon; the page updates every hour.") }}
+
+      {% elif n.id == 'markets' %}
+        {% if prices %}<div class="pills" style="margin-bottom:14px" aria-label="Market prices">{% for p in prices %}<span class="mp"><b>{{ p.label }}</b><span class="num">{{ p.price_fmt }}</span><span class="num {{ p.dir }}">{{ p.chg_fmt }}</span></span>{% endfor %}</div>{% endif %}
+        {% if commodities %}
+        <div class="grid2">
+          {% for a in commodities %}
+          <article class="panel asset">
+            <div class="ah"><div><h3>{{ a.label }}</h3><div class="unit">{{ a.unit }}</div></div><div class="big num">{{ a.price_fmt }}</div></div>
+            {{ chart(a.pts) }}
+            <table class="cmp"><tbody>
+              {% for r in a.rows %}<tr><th scope="row">{{ r.label }}</th><td class="num">{{ r.value_fmt }}</td><td class="num {{ r.dir }}">{{ r.chg_fmt }}</td></tr>{% endfor %}
+              <tr><th scope="row">Past 12 months</th><td colspan="2" class="num">{{ a.range_fmt }}</td></tr>
+            </tbody></table>
+            {% if a.summary %}<p class="sumline">{{ a.summary }}</p>{% endif %}
+            {% if a.inr_fmt %}<p class="small">About {{ a.inr_fmt }} at today's rupee rate. Approximate: it is the international price converted, so local rates differ because of duty and tax.</p>{% endif %}
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="panel empty">Price history could not be fetched right now.</div>
+        {% endif %}
+        {{ linked(links) }}
+        <div class="h"><h2>News on these assets</h2></div>
+        {{ feed(n.stories, rows=True) }}
+
+      {% elif n.id == 'money' %}
+        <div class="h" style="margin-top:0"><h2>Rupee against major currencies</h2></div>
+        {% if rupee %}
+        <div class="grid2">
+          {% for r in rupee %}
+          <article class="panel asset">
+            <div class="ah"><div><h3>Rupee vs {{ r.name }}</h3><div class="unit">Price of {{ r.quoted }}</div></div><div class="big num">{{ r.now_fmt }}</div></div>
+            {{ chart(r.pts) }}
+            <table class="cmp"><tbody>
+              {% for x in r.rows %}<tr><th scope="row">{{ x.label }}</th><td class="num">{{ x.value_fmt }}</td><td class="num {{ x.dir }}">{{ x.chg_fmt }}</td></tr>{% endfor %}
+            </tbody></table>
+            {% if r.summary %}<p class="sumline">{{ r.summary }}</p>{% endif %}
+          </article>
+          {% endfor %}
+        </div>
+        <div class="note">The percentage is the change in the rupee's value. Green means the rupee gained, red means it lost.</div>
+        {% else %}
+        <div class="panel empty">Currency history could not be fetched right now.</div>
+        {% endif %}
+
+        <div class="h"><h2>Mutual funds</h2></div>
+        {% if funds %}
+        <div class="panel scroll"><table class="tbl">
+          <thead><tr><th>Fund</th><th class="r">NAV</th><th class="r">1 year</th><th class="r">3 yr / year</th><th class="r">5 yr / year</th></tr></thead>
+          <tbody>
+            {% for f in funds %}
+            {% if f.missing %}<tr><td>{{ f.name }}</td><td colspan="4" class="r flat">Not found. Check funds.json.</td></tr>
+            {% else %}<tr><td><strong>{{ f.name }}</strong><div class="unit">NAV of {{ f.date }}</div></td><td class="r num">{{ f.nav_fmt }}</td><td class="r num {{ f.d1 }}">{{ f.r1 }}</td><td class="r num {{ f.d3 }}">{{ f.r3 }}</td><td class="r num {{ f.d5 }}">{{ f.r5 }}</td></tr>{% endif %}
+            {% endfor %}
+          </tbody></table></div>
+        <div class="note">Returns are past performance and do not predict the future. 3 and 5 year figures are yearly averages.</div>
+        {% else %}<div class="panel empty">Fund data could not be fetched right now.</div>{% endif %}
+
+        <div class="h"><h2>Fixed deposit rates (% per year)</h2></div>
+        {% if fd and fd.filled %}
+        <div class="panel scroll"><table class="tbl">
+          <thead><tr><th>Bank</th>{% for t in fd.terms %}<th class="r">{{ t }}</th>{% endfor %}</tr></thead>
+          <tbody>{% for b in fd.banks %}<tr><td><strong>{{ b.name }}</strong></td>{% for t in fd.terms %}<td class="r num">{{ '%.2f'|format(b.rates[t]) if b.rates[t] is not none else '–' }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+        </table></div>
+        <div class="note">As of {{ fd.as_of }}. Entered by hand from the banks, so confirm with the bank before booking.</div>
+        {% else %}
+        <div class="panel empty">FD rates have not been filled in yet. Add them in <b>fd_rates.json</b> (see README).</div>
+        {% endif %}
+
+        <div class="h"><h2>Money and bond news</h2></div>
+        {{ feed(n.stories, rows=True) }}
+
+      {% endif %}
+    </section>
+    {% endfor %}
+    {% endif %}
+  </main>
+</div>
+
+<nav class="bottom" aria-label="Sections">
+  {% for n in nav %}<a href="#{{ n.id }}" data-nav="{{ n.id }}">{{ icon(n.icon) }}<span>{{ n.label }}</span></a>{% endfor %}
+</nav>
+
+<dialog class="reader" id="reader" aria-label="Story">
+  <div class="rbar">
+    <div class="l"><button class="rbtn" id="rprev" type="button" aria-label="Previous story">&larr;</button><button class="rbtn" id="rnext" type="button" aria-label="Next story">&rarr;</button></div>
+    <button class="rbtn" id="rclose" type="button" aria-label="Close">Close</button>
+  </div>
+  <div class="rbody" id="rbody"></div>
+</dialog>
+
+<dialog class="about" id="about" aria-label="About this brief">
+  <h2>About this brief</h2>
+  <p>Each card is the publisher's own opening text, trimmed to about 60 words, with a link to the original. Topic labels and the TOP OF THE DAY flag come from simple keyword rules, not from a person or an AI, so treat them as quick signals and open the story to confirm. Pictures belong to the publishers and are credited on each card. Stories older than 3 hours drop off, except the day's top stories.</p>
+  <p>Prices come from free public sources and may be delayed. FD rates are entered by hand.</p>
+  {% if failed or notes %}<p>Not reachable this time: {{ (failed + notes)|join('; ') }}.</p>{% endif %}
+  <button class="rbtn" id="about-close" type="button">Close</button>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var demo = document.body.hasAttribute('data-demo');
+  var loadedAt = Date.now();
+  var desktop = window.matchMedia('(min-width:900px)');
+
+  /* ---- sections ---- */
+  var views = [].slice.call(document.querySelectorAll('.view'));
+  var links = [].slice.call(document.querySelectorAll('[data-nav]'));
+  var first = true;
+  function current() {
+    var id = (location.hash || '#world').slice(1);
+    return document.getElementById('view-' + id) ? id : 'world';
+  }
+  function show() {
+    var id = current();
+    views.forEach(function (v) { v.classList.toggle('on', v.id === 'view-' + id); });
+    links.forEach(function (a) {
+      if (a.dataset.nav === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (!first) window.scrollTo(0, 0);
+    first = false;
+    blocks.forEach(counter);
+  }
+
+  /* ---- cards: full-screen swipe on phone, wall on laptop, or a compact list ---- */
+  var mode = 'cards';
+  try { if (localStorage.getItem('gb-mode2') === 'list') mode = 'list'; } catch (e) {}
+  var blocks = [].map.call(document.querySelectorAll('.nb'), function (el) {
+    return { el: el, stack: el.querySelector('.stack'), cards: [].slice.call(el.querySelectorAll('.story')), expanded: false, toggle: !!el.querySelector('.seg') };
+  });
+  function visible(b) {
+    return b.cards.filter(function (c) { return b.expanded || !c.dataset.extra; });
+  }
+  function counter(b) {
+    var c = b.el.querySelector('.counter');
+    if (!c || !b.stack || desktop.matches || b.el.classList.contains('is-list')) return;
+    var vis = visible(b), h = b.stack.clientHeight || 1;
+    var i = Math.min(vis.length - 1, Math.max(0, Math.round(b.stack.scrollTop / h)));
+    c.textContent = vis.length ? (i + 1) + ' / ' + vis.length : '';
+  }
+  function paint(b) {
+    var vis = visible(b);
+    if (b.toggle) b.el.classList.toggle('is-list', mode === 'list');
+    b.cards.forEach(function (c) { c.hidden = vis.indexOf(c) === -1; });
+    var more = b.el.querySelector('.morebar'); if (more) more.hidden = b.expanded;
+    [].forEach.call(b.el.querySelectorAll('.seg button'), function (s) { s.setAttribute('aria-pressed', s.dataset.mode === mode ? 'true' : 'false'); });
+    counter(b);
+  }
+  blocks.forEach(function (b) {
+    var mb = b.el.querySelector('.morebtn');
+    if (mb) mb.addEventListener('click', function () {
+      b.expanded = true; paint(b);
+      var firstExtra = b.cards.filter(function (c) { return c.dataset.extra; })[0];
+      if (firstExtra) firstExtra.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    [].forEach.call(b.el.querySelectorAll('.seg button'), function (s) {
+      s.addEventListener('click', function () {
+        mode = s.dataset.mode;
+        try { localStorage.setItem('gb-mode2', mode); } catch (e) {}
+        blocks.forEach(function (x) { paint(x); if (x.stack) x.stack.scrollTop = 0; });
+      });
+    });
+    [].forEach.call(b.el.querySelectorAll('.jump'), function (j) {
+      j.addEventListener('click', function () {
+        var target = b.cards.filter(function (c) { return !c.classList.contains('brief'); })[+j.dataset.i];
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    if (b.stack) {
+      var tick = false;
+      b.stack.addEventListener('scroll', function () {
+        if (tick) return; tick = true;
+        requestAnimationFrame(function () { tick = false; counter(b); });
+      }, { passive: true });
+    }
+    paint(b);
+  });
+  window.addEventListener('hashchange', show);
+  desktop.addEventListener && desktop.addEventListener('change', function () { blocks.forEach(counter); });
+  show();
+
+  /* ---- reader (laptop): click a card to read it in full ---- */
+  var reader = document.getElementById('reader'), rbody = document.getElementById('rbody');
+  var canDialog = typeof reader.showModal === 'function';
+  var rlist = [], ridx = 0;
+  function showInReader() {
+    var card = rlist[ridx]; if (!card) return;
+    var clone = card.cloneNode(true); clone.hidden = false; clone.classList.remove('lead');
+    rbody.innerHTML = ''; rbody.appendChild(clone); rbody.scrollTop = 0;
+    document.getElementById('rprev').disabled = ridx === 0;
+    document.getElementById('rnext').disabled = ridx >= rlist.length - 1;
+  }
+  function openReader(card) {
+    var b = blocks.filter(function (x) { return x.el.contains(card); })[0];
+    rlist = (b ? visible(b) : [card]).filter(function (c) { return !c.classList.contains('brief'); });
+    ridx = Math.max(0, rlist.indexOf(card));
+    showInReader(); reader.showModal();
+  }
+  document.getElementById('rprev').addEventListener('click', function () { if (ridx > 0) { ridx--; showInReader(); } });
+  document.getElementById('rnext').addEventListener('click', function () { if (ridx < rlist.length - 1) { ridx++; showInReader(); } });
+  document.getElementById('rclose').addEventListener('click', function () { reader.close(); });
+  reader.addEventListener('click', function (e) { if (e.target === reader) reader.close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!reader.open) return;
+    if (e.key === 'ArrowRight') document.getElementById('rnext').click();
+    if (e.key === 'ArrowLeft') document.getElementById('rprev').click();
+  });
+  document.addEventListener('click', function (e) {
+    if (!canDialog || !desktop.matches) return;
+    if (e.target.closest('.more, .share, .jump, button, dialog')) return;
+    var card = e.target.closest('.story');
+    if (!card || card.classList.contains('brief')) return;
+    if (e.target.closest('a') && (e.ctrlKey || e.metaKey || e.shiftKey)) return;  /* let "open in new tab" work */
+    e.preventDefault(); openReader(card);
+  });
+
+  /* ---- share ---- */
+  var toastEl = document.getElementById('toast'), toastT;
+  function toast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { toastEl.hidden = true; }, 2200); }
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.share'); if (!btn) return;
+    var s = btn.closest('.story'), data = { title: s.dataset.title, url: s.dataset.link };
+    if (navigator.share) { navigator.share(data).catch(function () {}); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(data.url).then(function () { toast('Link copied'); }, function () { toast('Could not copy the link'); }); }
+  });
+
+  /* ---- about ---- */
+  var about = document.getElementById('about');
+  document.getElementById('about-btn').addEventListener('click', function () { if (about.showModal) about.showModal(); });
+  document.getElementById('about-close').addEventListener('click', function () { about.close(); });
+  about.addEventListener('click', function (e) { if (e.target === about) about.close(); });
+
+  /* ---- live "time ago" and refresh when reopened ---- */
+  function agoText(ts) {
+    var m = Math.max(1, Math.floor((Date.now() / 1000 - ts) / 60));
+    if (m < 60) return m + 'm ago';
+    var h = Math.floor(m / 60);
+    return h < 48 ? h + 'h ago' : Math.floor(h / 24) + 'd ago';
+  }
+  function tickAgo() { [].forEach.call(document.querySelectorAll('.ago'), function (e) { e.textContent = agoText(+e.dataset.ts); }); }
+  if (!demo) { tickAgo(); setInterval(tickAgo, 60000); }
+  document.addEventListener('visibilitychange', function () {
+    if (!demo && !document.hidden && Date.now() - loadedAt > 20 * 60 * 1000 && /^https?:/.test(location.protocol)) location.reload();
+  });
+
+  /* ---- day / night ---- */
+  var btn = document.getElementById('theme');
+  function paintTheme() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    btn.setAttribute('aria-label', dark ? 'Switch to day mode' : 'Switch to night mode');
+    btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('gb-theme', next); } catch (e) {}
+    paintTheme();
+  });
+  paintTheme();
+})();
+</script>
+</body>
+</html>
