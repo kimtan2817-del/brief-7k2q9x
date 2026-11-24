@@ -143,6 +143,9 @@ class Rules:
         self.regions = {k: compile_terms(v) for k, v in data["regions"].items()}
         self.severity_terms = [(compile_terms([t])[0], w) for t, w in data["severity"].items()]
         self.ignore = compile_terms(data.get("ignore", []))
+        self.boost_terms = [(compile_terms([k])[0], w) for k, w in data.get("boost", {}).items()]
+        dm = data.get("demote", {})
+        self.demote_terms, self.demote_penalty = compile_terms(dm.get("terms", [])), dm.get("penalty", 7)
         self.impact = [(r, [compile_terms(g) for g in r["when_all"]]) for r in data["impact_rules"]]
         self.scoring = data.get("scoring", {"high": 14, "med": 9})
 
@@ -161,6 +164,14 @@ class Rules:
             if 2 * _count(pats, title) + _count(pats, summary) >= 2:
                 regs.append(name)
         return sorted(cats, key=cats.get, reverse=True), regs
+
+    def boost(self, title):
+        """Extra weight for politics, big leaders and government decisions (capped)."""
+        return min(5, sum(w for p, w in self.boost_terms if p.search(title)))
+
+    def demote(self, title):
+        """Sport and entertainment stay possible, but rank far lower."""
+        return self.demote_penalty if _count(self.demote_terms, title) else 0
 
     def severity(self, title):
         return min(6, sum(w for p, w in self.severity_terms if p.search(title)))
@@ -302,7 +313,7 @@ def build_stories(items, rules, watch=None, now=None, limit=150):
 
         sources = sorted({i.source for i in group})
         age_h = max(0.0, (now - rep.published).total_seconds() / 3600)
-        score = min(len(sources), 6) * 3 + max(0.0, 4 - age_h / 6) + rules.severity(rep.title)
+        score = min(len(sources), 6) * 3 + max(0.0, 4 - age_h / 6) + rules.severity(rep.title) + rules.boost(rep.title) - rules.demote(rep.title)
         if groups:
             score += 3  # things on your sir's watch list come first
             if _INDIA.search(rep.title + " " + raw):
