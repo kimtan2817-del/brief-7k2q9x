@@ -1,4 +1,5 @@
 """Collects everything the page needs (news, prices, comparisons, funds, FD rates)."""
+import crawl
 import demo_data
 import engine
 import history
@@ -42,6 +43,13 @@ def collect(demo=False):
     for s in stories:
         s["icon"] = layout.CAT_ICONS.get(s["primary"], layout.CAT_ICONS["World"])
     tabs = engine.select_tabs(stories, rules)
+    if not demo:
+        try:  # open the articles of headline-only cards and fill them with real text
+            n = crawl.enrich(tabs["world"] + tabs["india"])
+            if n:
+                notes.append(f"{n} cards filled from the article text")
+        except Exception as ex:
+            notes.append(f"article filling skipped: {ex}")
     return {
         "stories": stories,
         "world": tabs["world"],
