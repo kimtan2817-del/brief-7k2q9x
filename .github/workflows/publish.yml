@@ -2,7 +2,9 @@ name: Update and publish Global Brief
 
 on:
   schedule:
-    - cron: "7 * * * *"      # every hour (GitHub may start it a few minutes late)
+    - cron: "7 * * * *"          # every hour (GitHub may start it a few minutes late)
+    - cron: "0,30 22,23 * * *"   # 3:30, 4:00, 4:30 and 5:00 AM India time, so the page is fresh for early readers
+    - cron: "0 0 * * *"          # 5:30 AM India time
   workflow_dispatch:         # lets you press "Run workflow" by hand
   push:
     branches: [main]
