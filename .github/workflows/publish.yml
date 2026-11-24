@@ -28,6 +28,8 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - name: Build the page (fails, and so keeps the old page, if nothing could be fetched)
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}   # optional: without it, cards are filled with trimmed article text
         run: python build.py
       - name: Publish to Netlify
         env:
