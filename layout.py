@@ -29,7 +29,7 @@ def build_nav(state):
 
     def sec(sid, label, lst=None):
         return {"id": sid, "label": label, "icon": ICONS[sid], "stories": lst,
-                "brief": (lst or [])[:5] if sid in ("world", "india") else None}
+                "brief": (lst or [])[:7] if sid in ("world", "india") else None}
 
     return [sec("world", "World", state["world"]), sec("india", "India", state["india"]),
             sec("markets", "Markets", assets), sec("money", "Money", money)]
