@@ -320,13 +320,9 @@ dialog::backdrop{background:rgba(10,14,20,.55)}
 
 {% macro feed(stories, top_n=None, pills=None, brief=None, btitle='', rows=False, empty="Nothing here right now.") %}
 <div class="nb{{ ' rows is-list' if rows }}">
-  {% if not rows %}
+  {% if not rows and pills %}
   <div class="tools">
     {% if pills %}<div class="pills" aria-label="Market prices">{% for p in pills %}<span class="mp"><b>{{ p.label }}</b><span class="num">{{ p.price_fmt }}</span><span class="num {{ p.dir }}">{{ p.chg_fmt }}</span></span>{% endfor %}</div>{% endif %}
-    <div class="seg" role="group" aria-label="Reading style">
-      <button type="button" data-mode="cards" aria-pressed="true">Cards</button>
-      <button type="button" data-mode="list" aria-pressed="false">List</button>
-    </div>
   </div>
   {% endif %}
   {% if stories %}
@@ -476,17 +472,6 @@ dialog::backdrop{background:rgba(10,14,20,.55)}
           </tbody></table></div>
         <div class="note">Returns are past performance and do not predict the future. 3 and 5 year figures are yearly averages.</div>
         {% else %}<div class="panel empty">Fund data could not be fetched right now.</div>{% endif %}
-
-        <div class="h"><h2>Fixed deposit rates (% per year)</h2></div>
-        {% if fd and fd.filled %}
-        <div class="panel scroll"><table class="tbl">
-          <thead><tr><th>Bank</th>{% for t in fd.terms %}<th class="r">{{ t }}</th>{% endfor %}</tr></thead>
-          <tbody>{% for b in fd.banks %}<tr><td><strong>{{ b.name }}</strong></td>{% for t in fd.terms %}<td class="r num">{{ '%.2f'|format(b.rates[t]) if b.rates[t] is not none else '–' }}</td>{% endfor %}</tr>{% endfor %}</tbody>
-        </table></div>
-        <div class="note">As of {{ fd.as_of }}. Entered by hand from the banks, so confirm with the bank before booking.</div>
-        {% else %}
-        <div class="panel empty">FD rates have not been filled in yet. Add them in <b>fd_rates.json</b> (see README).</div>
-        {% endif %}
 
         <div class="h"><h2>Money and bond news</h2></div>
         {{ feed(n.stories, rows=True) }}
